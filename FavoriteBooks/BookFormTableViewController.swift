@@ -30,6 +30,7 @@ class BookFormTableViewController: UITableViewController {
         super.viewDidLoad()
 
         updateView()
+
     }
     
     func updateView() {

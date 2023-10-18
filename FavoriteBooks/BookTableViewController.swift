@@ -12,10 +12,14 @@ class BookTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        tableView.reloadData()
     }
 
     // MARK: - Table view data source
+    
+    
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        <#code#>
+//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return books.count
@@ -35,7 +39,7 @@ class BookTableViewController: UITableViewController {
 
     // MARK: - Navigation
     
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+    @IBAction func unwindToBookTable(segue: UIStoryboardSegue) {
         guard let source = segue.source as? BookFormTableViewController,
             let book = source.book else {return}
         
@@ -45,6 +49,7 @@ class BookTableViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
         } else {
             books.append(book)
+            tableView.insertRows(at: [IndexPath(row: books.count - 1, section: 0)], with: .automatic)
         }
     }
     @IBSegueAction func editBook(_ coder: NSCoder, sender: Any?) -> BookFormTableViewController? {
