@@ -17,22 +17,26 @@ class BookTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            books.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return books.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath) as! BookTableViewCell
 
         let book = books[indexPath.row]
-        var content = cell.defaultContentConfiguration()
-        content.text = book.title
-        content.secondaryText = book.description
-        cell.contentConfiguration = content
+//        var content = cell.defaultContentConfiguration()
+//        content.text = book.title
+//        content.secondaryText = book.description
+//        cell.contentConfiguration = content
+        cell.update(with: book)
 
         return cell
     }
