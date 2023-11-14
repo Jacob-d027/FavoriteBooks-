@@ -51,6 +51,7 @@ class BookTableViewController: UITableViewController {
             books.remove(at: indexPath.row)
             books.insert(book, at: indexPath.row)
             tableView.deselectRow(at: indexPath, animated: true)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         } else {
             books.append(book)
             tableView.insertRows(at: [IndexPath(row: books.count - 1, section: 0)], with: .automatic)
@@ -58,11 +59,13 @@ class BookTableViewController: UITableViewController {
     }
     @IBSegueAction func editBook(_ coder: NSCoder, sender: Any?) -> BookFormTableViewController? {
         
-        guard let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) else {
+        guard let cell = sender as? BookTableViewCell, let indexPath = tableView.indexPath(for: cell) else {
             return nil
         }
         
         let book = books[indexPath.row]
+        books.remove(at: indexPath.row)
+        books.insert(book, at: indexPath.row)
         
         return BookFormTableViewController(coder: coder, book: book)
     }
